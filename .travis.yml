@@ -17,6 +17,8 @@ before_install:
 - php artisan migrate
 - php artisan db:seed
 - php artisan storage:link
+script:
+- php -v
 deploy:
   provider: heroku
   api_key:
