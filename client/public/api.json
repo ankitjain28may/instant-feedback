@@ -1,0 +1,55 @@
+{
+  "makeinindia": {
+    "name": "Make In India",
+    "tweets": [
+      {
+        "location": "Noida, India",
+        "gender": "male",
+        "sentiment_score": 0.6,
+        "text": "It is the worst policy so far, it is a fraud."
+      }, {
+        "location": "Mumbai, India",
+        "gender": "female",
+        "sentiment_score": 0.4,
+        "text": "Only patanjali profits from this, government wrecking our economy."
+      }
+    ]
+  },
+  "swachhbharat": {
+    "name": "Swachh Bharat",
+    "tweets": [
+      {
+        "location": "Delhi, India",
+        "gender": "female",
+        "sentiment_score": 0.3,
+        "text": "I am sure that this movement is going to enriche our green cover and improve the sanitary conditions."
+      }, {
+        "location": "Agra, India",
+        "gender": "male",
+        "sentiment_score": 0.7,
+        "text": "What a shady move by government, diverting our focus from core problems like corruption and leeching to simple things like keeping roads clean"
+      }
+    ]
+  },
+  "demonetisation": {
+    "name": "Demonitisation",
+    "tweets": [
+      {
+        "location": "Bengaluru, India",
+        "gender": "female",
+        "sentiment_score": 0.8,
+        "text": "Pathetic move by Indian government."
+      }, {
+        "location": "Punjab, India",
+        "gender": "male",
+        "sentiment_score": 0.2,
+        "text": "Such a bold move by our honerable Prime Minister."
+      }, {
+        "location": "Agra, India",
+        "gender": "male",
+        "sentiment_score": 0.7,
+        "text": "The blunder made by the goverment due to applying demonitisation thoughtlessly has caused a serious blow to our GDP. Shame"
+      }
+    ]
+  }
+}

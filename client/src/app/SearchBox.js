@@ -16,7 +16,7 @@ const styles = css`
       width: 100%;
       border: none;
       border-radius: 36px;
-      padding: 6px 20px;
+      padding: 8px 20px;
     }
 
     &_button {
@@ -32,10 +32,8 @@ function SearchBox({ onSubmit }) {
   const inputRef = React.useRef();
 
   function handleSubmit(event) {
-    console.log('submut');
     event.preventDefault();
     const value = inputRef.current.value;
-    console.log(value);
     onSubmit(value);
   }
 

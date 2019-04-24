@@ -20,7 +20,7 @@ const styles = css`
   }
 `;
 
-function LeftSidebar({ schemes }) {
+function LeftSidebar({ schemes, activeScheme }) {
   const [searchValue, setSearchValue] = React.useState(null);
 
   function handleSubmit(value) {
@@ -43,7 +43,7 @@ function LeftSidebar({ schemes }) {
       <Spacer mt={40} mb={16}>
         <SearchBox onSubmit={handleSubmit} />
       </Spacer>
-      <SchemesList schemes={filteredSchemes} activeScheme={'makeinindia'} />
+      <SchemesList schemes={filteredSchemes} activeScheme={activeScheme} />
     </nav>
   );
 }
