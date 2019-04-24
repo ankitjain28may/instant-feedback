@@ -1,0 +1,32 @@
+language: php
+addons:
+  apt:
+    sources:
+    - mysql-5.7-trusty
+    packages:
+    - mysql-server
+    - mysql-client
+php:
+- 7.1
+before_install:
+- cd ./server
+- cp .env.travis .env
+- composer install --dev --ignore-platform-reqs
+- php artisan key:generate
+- mysql -e 'CREATE DATABASE instant_feedbacks;'
+- php artisan migrate
+- php artisan db:seed
+- php artisan storage:link
+deploy:
+  provider: heroku
+  api_key:
+    secure: P4LEE9DTAaFF6FN6uWaBMQnBT8WhOW3LlOdjrsvZ4kbaKdClON3GTh9MVY4yUXQVMzbMGMO3/hfAOCPvtQImm9A5qEbYILXBiEIs6WkDn207AfE0oVFaPwYPqJofRBsZWRf0U8o+rM6sEB7mav76KYbG6dl7M1JGzoIj5FmJJyg7yHtccQsW4vQKp8ecjstEcGgzZeHdSNVzvqqMqHAoum2lOtSRHEIwUPSLxucKRTun/zwYxLrL9xhHSksm29XiOZPJJB2l5qkIuenhDgxSfoUuCvXSw/yp6dIhKaEaU+wgq2tvD0ACdGo/uRGc1GuensKpXaaHJzCOpdc9SccLDqxdjH+d7swfeisRzmO/tqJfQ7rWML+FcPR9oG1Uza5KGbvAcbg94N3+/27UZNaeWscyOKxWwvAN117ncs5QlindBAbcBU4EyjA6VqconYpw3DwgcxEkHubW7N39qgp7cpeOjzBdnHkym5gcrr0ICYlPFVOXVFqneqvs6Wwix49JCK6oAOPJ1NOVgc3s4E9Rio0AfoXs81UUxwBN7YxVmKzO0/Q6+MTKQGkYIIyIdaILWuQG2HAJRno4Ipy9xHXy6slhVKQeSfRliY/fbbZdYJMVANAep8HfDGbf6HRfmC2iAbHIcWhQLH5CjlYPWDCXrXVPu+XvJbHgnJdWUaw7br4=
+  skip_cleanup: true
+  app: instant-feedback
+  on:
+    repo: ankitjain28may/instant-feedback
+    branch: master
+  run:
+    - "composer install --dev"
+    - "php artisan migrate"
+    - "php artisan db:seed"
