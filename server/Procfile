@@ -1,1 +1,2 @@
-supervisor: supervisord -c supervisor.conf -n
+worker: supervisord -c supervisor.conf -n
+web: vendor/bin/heroku-php-apache2 ./public
