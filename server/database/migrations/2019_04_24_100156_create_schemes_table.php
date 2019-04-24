@@ -16,7 +16,7 @@ class CreateSchemesTable extends Migration
         Schema::create('schemes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('gov_scheme_id')->unique();
             $table->string('hashtag')->unique();
             $table->integer('positive_tweets')->nullable();
