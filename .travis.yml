@@ -8,15 +8,15 @@ addons:
     - mysql-client
 php:
 - 7.1
-# before_install:
-# - cd ./server
-# - cp .env.travis .env
-# - composer install --dev --ignore-platform-reqs
-# - php artisan key:generate
-# - mysql -e 'CREATE DATABASE instant_feedbacks;'
-# - php artisan migrate
-# - php artisan db:seed
-# - php artisan storage:link
+before_install:
+- cd ./server
+- cp .env.travis .env
+- composer install --dev --ignore-platform-reqs
+- php artisan key:generate
+- mysql -e 'CREATE DATABASE instant_feedbacks;'
+- php artisan migrate
+- php artisan db:seed
+- php artisan storage:link
 script:
 - php -v
 deploy:
