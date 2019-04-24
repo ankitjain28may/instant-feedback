@@ -20,7 +20,7 @@ class CreateTweetsTable extends Migration
             $table->unsignedBigInteger('scheme_id')->nullable();
             $table->decimal('sentiment_score', 4, 2)->nullable();
             $table->string('location')->nullable();
-            $table->enum('gender', ['M', 'F']);
+            $table->enum('gender', ['male', 'female']);
             $table->foreign('scheme_id')->references('id')->on('schemes')->onDelete('cascade');
             $table->timestamps();
         });
