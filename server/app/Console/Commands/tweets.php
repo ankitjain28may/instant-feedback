@@ -46,26 +46,34 @@ class tweets extends Command
     {
         TwitterStreamingApi::publicStream()
         ->whenHears(Scheme::getAllHashtags(), function(array $tweet) {
-            echo $tweet['user']['screen_name'] . " has tweeted\n";
-
+            echo $tweet['user']['screen_name'] . " has tweeted " . $tweet['text'] . "\n";
             try {
                 $schemes = Scheme::getAllSchemes();
                 $text = $tweet['text'];
                 if (isset($tweet['retweeted_status'])) {
                     $text = $tweet['retweeted_status']['text'];
-                } else if (isset($tweet['quoted_status'])) {
-                    $tweet['entities']['hashtags'] = $tweet['quoted_status']['entities']['hashtags'];
                 }
+
+                $hashtags = array_merge([], Tweet::getHashtags($tweet['entities']['hashtags']));
+                if (isset($tweet['extended_tweet'])) {
+                    $hashtags = array_merge($hashtags, Tweet::getHashtags($tweet['extended_tweet']['entities']['hashtags']));
+                }
+                if (isset($tweet['quoted_status'])) {
+                    $hashtags = array_merge($hashtags, Tweet::getHashtags($tweet['quoted_status']['entities']['hashtags']));
+                }
+
+                $hashtags = array_unique($hashtags);
+
                 $data = json_decode(Tweet::analyzeComment($text, $tweet['user']['lang']), true);
                 $genderize = json_decode(Tweet::getGender(explode(' ', $tweet['user']['name'])[0]), true);
-                foreach ($tweet['entities']['hashtags'] as $key => $value) {
+                foreach ($hashtags as $key => $value) {
                     $tweet_data = [];
-                    if (in_array(strtolower($value['text']), $schemes)) {
-                        $scheme = Scheme::getByHashtag($value['text']);
+                    if (in_array($value, $schemes)) {
+                        $scheme = Scheme::getByHashtag($value);
 
                         $tweet_data = [
                             'tweet' => $text,
-                            'hashtags' => strtolower($value['text']),
+                            'hashtags' => $value,
                             'scheme_id' => $scheme->id,
                             'sentiment_score' => $data['attributeScores']['TOXICITY']['summaryScore']['value'],
                             // 'location' => $tweet['place']['full_name'],
@@ -79,7 +87,7 @@ class tweets extends Command
                         } else {
                             $scheme->increment('negative_tweets');
                         }
-                    broadcast(new TweetsStream($tweet_data, strtolower($value['text'])))->toOthers();
+                    broadcast(new TweetsStream($tweet_data, $value))->toOthers();
                     }
                 }
 
