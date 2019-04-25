@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --mode development --hot",
-    "build": "webpack"
+    "build": "webpack",
+    "copy-assets": "cd dist && cp index.html 200.html",
+    "host": "surge -d instant-feedback.surge.sh -p dist",
+    "deploy": "npm run build && npm run copy-assets && npm run host"
   },
   "keywords": [],
   "author": "",
