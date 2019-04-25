@@ -46,20 +46,32 @@ class tweets extends Command
     {
         TwitterStreamingApi::publicStream()
         ->whenHears(Scheme::getAllHashtags(), function(array $tweet) {
-            echo $tweet['user']['screen_name'] . " has tweeted " . $tweet['text'] . "\n";
+            // echo $tweet['user']['screen_name'] . " has tweeted " . $tweet['text'] . "\n";
+            //
+            echo json_encode($tweet);
             try {
                 $schemes = Scheme::getAllSchemes();
                 $text = $tweet['text'];
-                if (isset($tweet['retweeted_status'])) {
-                    $text = $tweet['retweeted_status']['text'];
-                }
-
                 $hashtags = array_merge([], Tweet::getHashtags($tweet['entities']['hashtags']));
+
                 if (isset($tweet['extended_tweet'])) {
                     $hashtags = array_merge($hashtags, Tweet::getHashtags($tweet['extended_tweet']['entities']['hashtags']));
                 }
+
+                if (isset($tweet['retweeted_status'])) {
+                    $text = $tweet['retweeted_status']['text'];
+                    $hashtags = array_merge($hashtags, Tweet::getHashtags($tweet['retweeted_status']['entities']['hashtags']));
+                    if (isset($tweet['retweeted_status']['extended_tweet'])) {
+                        $hashtags = array_merge($hashtags, Tweet::getHashtags($tweet['retweeted_status']['extended_tweet']['entities']['hashtags']));
+                    }
+
+                }
+
                 if (isset($tweet['quoted_status'])) {
                     $hashtags = array_merge($hashtags, Tweet::getHashtags($tweet['quoted_status']['entities']['hashtags']));
+                    if (isset($tweet['quoted_status']['extended_tweet'])) {
+                        $hashtags = array_merge($hashtags, Tweet::getHashtags($tweet['quoted_status']['extended_tweet']['entities']['hashtags']));
+                    }
                 }
 
                 $hashtags = array_unique($hashtags);
