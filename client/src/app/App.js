@@ -2,6 +2,7 @@ import React from 'react';
 import { css } from 'astroturf';
 import classnames from 'classnames';
 
+import { initPusher } from 'utils/pusher';
 import { Rating } from 'components/Rating';
 import { RadialBar } from 'components/RadialBar';
 import { LeftSidebar } from 'app/LeftSidebar';
@@ -74,7 +75,9 @@ const styles = css`
   }
 `;
 
-const cities = ['Delhi', 'Bengaluru', 'Mumbai'];
+const pusher = initPusher();
+
+const cities = ['Delhi', 'Bangalore', 'Mumbai'];
 
 function extractCity(location) {
   const commaIndex = location.indexOf(',');
@@ -98,7 +101,7 @@ function computeTweetCount(tweets) {
 
   tweets.forEach(tweet => {
     const side = tweet.sentiment_score < 0.4 ? 'positive' : 'negative';
-    const gender = tweet.gender;
+    const { gender } = tweet;
 
     tweetsCount.total += 1;
     tweetsCount[side].total += 1;
@@ -109,37 +112,25 @@ function computeTweetCount(tweets) {
 }
 
 function computeCityDstrb(tweets) {
-  const l = tweets.length;
-  const d = parseInt(l / 3);
-  const safeLimit = d * 3;
-
   const cityDstrb = {
     positive: {
       Delhi: 0,
-      Bengaluru: 0,
+      Bangalore: 0,
       Mumbai: 0,
     },
     negative: {
       Delhi: 0,
-      Bengaluru: 0,
+      Bangalore: 0,
       Mumbai: 0,
     }
-  }
+  };
 
-  for(let i = 0; i < safeLimit; i += 3) {
-    for(let j = 0; j < 3; j += 1) {
-      const tweet = tweets[i + j];
-      const side = tweet.sentiment_score < 0.4 ? 'positive' : 'negative';
-      const city = cities[j];
-      cityDstrb[side][city] += 1;
-    }
-  }
+  tweets.forEach(tweet => {
+    const side = tweet.sentiment_score < 0.4 ? 'positive' : 'negative';
+    const { location } = tweet;
 
-  for(let i = safeLimit; i < l; i += 1) {
-    const side = tweets[i].sentiment_score < 0.4 ? 'positive' : 'negative';
-    const city = cities[0];
-    cityDstrb[side][city] += 1;
-  }
+    cityDstrb[side][location] += 1;
+  });
 
   return cityDstrb;
 }
@@ -148,12 +139,35 @@ function App({ schemes=[], schemesData=[], activeScheme }) {
   const scheme = schemesData[activeScheme] || {};
   const { name, tweets=[] } = scheme;
 
-  const tweetsCount = computeTweetCount(tweets);
-  const cityDstrb = computeCityDstrb(tweets);
+  const [tweetState, setTweetState] = React.useState(tweets);
+
+  React.useEffect(() => {
+    setTweetState(tweets);
+  }, [tweets]);
+
+  React.useEffect(() => {
+    console.log('subscribe');
+    const channel = pusher.subscribe(activeScheme);
+
+    channel.bind('App\\Events\\TweetsStream', function(data) {
+      console.log('An event was triggered with message: ', data);
+      const newTweet = data.tweet;
+      setTweetState((oldTweets) => ([newTweet, ...oldTweets]));
+    });
+
+    return () => {
+      console.log('unsubscribe');
+      pusher.unsubscribe(activeScheme);
+    }
+  }, [activeScheme]);
+  
+  const tweetsCount = computeTweetCount(tweetState);
+  const cityDstrb = computeCityDstrb(tweetState);
 
   const positivePerc = (tweetsCount.positive.total / tweetsCount.total) * 100;
   const negativePerc = (tweetsCount.negative.total / tweetsCount.total) * 100;
   const rating = Math.round(positivePerc / 20);
+  const limitedTweets = tweetState.slice(0, 10);
 
   return (
     <div className={styles.app}>
@@ -185,7 +199,7 @@ function App({ schemes=[], schemesData=[], activeScheme }) {
           <LocationChart cities={cities} cityDstrb={cityDstrb} />
         </section>
       </main>
-      <RightSidebar tweets={tweets} />
+      <RightSidebar tweets={limitedTweets} />
     </div>
   );
 }

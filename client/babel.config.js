@@ -7,6 +7,7 @@ const config = {
         alias: {
           app: './src/app',
           components: './src/components',
+          utils: './src/utils',
         },
       },
     ],
