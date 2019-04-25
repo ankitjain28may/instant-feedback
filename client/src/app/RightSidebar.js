@@ -2,6 +2,13 @@ import React from 'react';
 import { css } from 'astroturf';
 
 const styles = css`
+  .description {
+    color: #555;
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 10px;
+  }
+
   .right_sidebar {
     padding-top: 80px;
     padding-bottom: 20px;
@@ -32,10 +39,11 @@ const styles = css`
 function RightSidebar({ tweets=[] }) {
   return (
     <aside className={styles.right_sidebar} >
+      <p className={styles.description}>Tweets on scheme</p>
       <ul className={styles.tweets_list}>
         {
-          tweets.map(({ text }) => (
-            <li className={styles.tweet} key={text}>{text}</li>
+          tweets.map(({ tweet }, index) => (
+            <li className={styles.tweet} key={`${tweet}-${index}`}>{tweet}</li>
           ))
         }
       </ul>

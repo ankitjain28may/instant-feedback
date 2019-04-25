@@ -1,17 +1,9 @@
-import React from 'react';
-import { css } from 'astroturf';
+import React, { Fragment } from 'react';
+import { Router } from "@reach/router";
 
-import { LeftSidebar } from 'app/LeftSidebar';
-import { Main } from 'app/Main';
+import { App } from 'app/App';
 
-import './app.css';
-
-const styles = css`
-  .app {
-    position: relative;
-    display: flex;
-  }
-`;
+import './base.css';
 
 function computeSchemesList(apiData) {
   const schemes = [];
@@ -27,13 +19,16 @@ function computeSchemesList(apiData) {
   return schemes;
 }
 
-function App() {
+function Bootstrap() {
   const [apiData, setApiData] = React.useState({});
+
+  const schemes = computeSchemesList(apiData);
 
   React.useEffect(() => {
     try {
       (async() => {
         const res = await fetch('http://localhost:5000/api.json', {});
+        // const res = await fetch('http://192.168.0.109:8000/api/data', {});
         const jsonData = await res.json();
         setApiData(jsonData);
       })();
@@ -42,18 +37,11 @@ function App() {
     }
   }, []);
 
-  const schemes = computeSchemesList(apiData);
-  const activeScheme = 'swachhbharat';
-  const scheme = apiData[activeScheme];
-
-  console.log('scheme', scheme);
-
   return (
-    <div className={styles.app}>
-      <LeftSidebar schemes={schemes} activeScheme={activeScheme} />
-      <Main scheme={scheme} />
-    </div>
+    <Router>
+      <App path=":activeScheme" schemes={schemes} schemesData={apiData} />
+    </Router>
   );
 }
 
-export { App };
+export { Bootstrap };

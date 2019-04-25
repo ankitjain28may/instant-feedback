@@ -9,7 +9,7 @@ const styles = css`
       display: flex;
       align-items: center;
       position: relative;
-      width: 200px;
+      width: 240px;
     }
 
     &_input {

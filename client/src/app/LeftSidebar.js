@@ -16,11 +16,11 @@ const styles = css`
     padding-top: 30px;
     position: fixed;
     height: 100vh;
-    width: 250px;
+    width: 270px;
   }
 `;
 
-function LeftSidebar({ schemes, activeScheme }) {
+function LeftSidebar({ schemes }) {
   const [searchValue, setSearchValue] = React.useState(null);
 
   function handleSubmit(value) {
@@ -43,7 +43,7 @@ function LeftSidebar({ schemes, activeScheme }) {
       <Spacer mt={40} mb={16}>
         <SearchBox onSubmit={handleSubmit} />
       </Spacer>
-      <SchemesList schemes={filteredSchemes} activeScheme={activeScheme} />
+      <SchemesList schemes={filteredSchemes} />
     </nav>
   );
 }

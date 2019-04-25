@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "@reach/router";
 import { css } from 'astroturf';
 import classnames from 'classnames';
 
@@ -9,16 +10,17 @@ const styles = css`
 
   .scheme {
     list-style: none;
-    padding: 4px 0;
+    padding: 6px 0;
+    font-size: 20px;
   }
 
   .link {
     text-decoration: none;
-    color: #ccc;
+    color: #add0eb;
     transition: 0.4s ease-in;
   }
 
-  .link:hover {
+  .link:hover:not(.active_link) {
     color: #ddd;
   }
 
@@ -28,20 +30,22 @@ const styles = css`
   }
 `;
 
-function SchemesList({ schemes, activeScheme }) {
+function SchemesList({ schemes }) {
   return (
     <ul className={styles.schemes_list} >
       {
         schemes.map(scheme => (
           <li className={styles.scheme} key={scheme.hashtag}>
-            <a
-              className={classnames(styles.link, {
-                [styles.active_link]: scheme.hashtag === activeScheme
+            <Link
+              getProps={({ isCurrent }) => ({
+                className: classnames(styles.link, {
+                  [styles.active_link]: isCurrent
+                })
               })}
-              href={`/schemes/${scheme.hashtag}`}
+              to={`/${scheme.hashtag}`}
             >
               {scheme.name}
-            </a>
+            </Link>
           </li>
         ))
       }

@@ -15,7 +15,12 @@ const config = {
       // CSS Files
       {
         test: /\.css$/,
-        use: ['style-loader', 'astroturf/css-loader'],
+        use: ['style-loader', {
+          loader: 'astroturf/css-loader',
+          options: {
+            localIdentName: '[local]--[hash:base64:8]',
+          }
+        }],
       }
     ]
   },
@@ -27,6 +32,7 @@ const config = {
     })
   ],
   devServer: {
+    historyApiFallback: true,
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
