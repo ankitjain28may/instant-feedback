@@ -32,6 +32,16 @@ class Scheme extends Model
         return $hashtags;
     }
 
+    public static function getAllHashtags()
+    {
+        $hashtags = [];
+        $schemes = Self::all(['hashtag'])->toArray();
+        foreach ($schemes as $hashtag => $value) {
+            array_push($hashtags, '#' . $value['hashtag']);
+        }
+        return $hashtags;
+    }
+
     public static function getByHashtag($hashtag)
     {
         $data = Self::where('hashtag', $hashtag)->first();

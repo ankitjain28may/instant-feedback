@@ -63,4 +63,13 @@ class Tweet extends Model
         }
     }
 
+    public static function getHashtags(array $hashtags)
+    {
+        $data = [];
+        foreach ($hashtags as $key => $value) {
+            array_push($data, strtolower($value['text']));
+        }
+        return $data;
+    }
+
 }
