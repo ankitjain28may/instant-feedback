@@ -17,6 +17,7 @@ const styles = css`
       border: none;
       border-radius: 36px;
       padding: 8px 20px;
+      box-shadow: 4px 2px 8px 0px rgba(0, 0, 0, 0.2);
     }
 
     &_button {

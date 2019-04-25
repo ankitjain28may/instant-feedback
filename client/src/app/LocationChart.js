@@ -33,11 +33,14 @@ function LocationChart({ cities, cityDstrb }) {
       type: 'bar',
       data: barChartData,
       options: {
+        tooltips: {
+          enabled: false,
+        },
         scales: {
           yAxes: [{
             ticks: {
               beginAtZero: true,
-              stepSize: 1,
+              // stepSize: 1,
             }
           }]
         }
