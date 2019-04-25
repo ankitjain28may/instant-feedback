@@ -16,11 +16,11 @@ class CreateSchemesTable extends Migration
         Schema::create('schemes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('gov_scheme_id')->unique();
             $table->string('hashtag')->unique();
-            $table->integer('positive_tweets')->nullable();
-            $table->integer('negative_tweets')->nullable();
+            $table->integer('positive_tweets')->default(0);
+            $table->integer('negative_tweets')->default(0);
             $table->decimal('sentiment_score', 4, 2)->nullable();
             $table->timestamps();
         });
