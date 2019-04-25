@@ -1,4 +1,5 @@
 import React from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { css } from 'astroturf';
 
 const styles = css`
@@ -34,6 +35,17 @@ const styles = css`
   .tweet + .tweet {
     margin-top : 26px;
   }
+
+  .tweet_animation {
+    &_enter {
+      opacity: 0;
+    }
+
+    &_enter_active {
+      opacity: 1;
+      transition: opacity 400ms ease-in;
+    }
+  }
 `;
 
 function RightSidebar({ tweets=[] }) {
@@ -41,11 +53,22 @@ function RightSidebar({ tweets=[] }) {
     <aside className={styles.right_sidebar} >
       <p className={styles.description}>Tweets on scheme</p>
       <ul className={styles.tweets_list}>
-        {
-          tweets.map(({ tweet }, index) => (
-            <li className={styles.tweet} key={`${tweet}-${index}`}>{tweet}</li>
-          ))
-        }
+        <TransitionGroup component={null}>
+          {
+            tweets.map(({ tweet }) => (
+              <CSSTransition
+                key={tweet}
+                timeout={400}
+                classNames={{
+                  enter: styles.tweet_animation_enter,
+                  enterActive: styles.tweet_animation_enter_active,
+                }}
+              >
+                <li className={styles.tweet}>{tweet}</li>
+              </CSSTransition>
+            ))
+          }
+        </TransitionGroup>
       </ul>
     </aside>
   );

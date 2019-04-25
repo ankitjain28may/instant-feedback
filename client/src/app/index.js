@@ -27,8 +27,9 @@ function Bootstrap() {
   React.useEffect(() => {
     try {
       (async() => {
+        const res = await fetch('http://34.211.162.216:8000/api/data');
+        // const res = await fetch('http://192.168.0.106:8000/api/data');
         // const res = await fetch('http://localhost:5000/api.json');
-        const res = await fetch('http://192.168.0.106:8000/api/data');
         const jsonData = await res.json();
         setApiData(jsonData);
       })();

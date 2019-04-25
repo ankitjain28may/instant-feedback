@@ -160,14 +160,14 @@ function App({ schemes=[], schemesData=[], activeScheme }) {
       pusher.unsubscribe(activeScheme);
     }
   }, [activeScheme]);
-  
+
   const tweetsCount = computeTweetCount(tweetState);
   const cityDstrb = computeCityDstrb(tweetState);
 
   const positivePerc = (tweetsCount.positive.total / tweetsCount.total) * 100;
   const negativePerc = (tweetsCount.negative.total / tweetsCount.total) * 100;
   const rating = Math.round(positivePerc / 20);
-  const limitedTweets = tweetState.slice(0, 10);
+  const limitedTweets = [...tweetState].sort((a, b) => b.id - a.id).slice(0, 10);
 
   return (
     <div className={styles.app}>

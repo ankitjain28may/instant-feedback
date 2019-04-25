@@ -3,7 +3,7 @@
     "name": "Make In India",
     "tweets": [
       {
-        "location": "Delhi, India",
+        "location": "Delhi",
         "gender": "male",
         "sentiment_score": 0.6,
         "tweet": "It is the worst policy so far, it is a fraud."
@@ -19,12 +19,12 @@
     "name": "Swachh Bharat",
     "tweets": [
       {
-        "location": "Delhi, India",
+        "location": "Delhi",
         "gender": "female",
         "sentiment_score": 0.3,
         "tweet": "I am sure that this movement is going to enriche our green cover and improve the sanitary conditions."
       }, {
-        "location": "Bengaluru, India",
+        "location": "Bangalore",
         "gender": "male",
         "sentiment_score": 0.7,
         "tweet": "What a shady move by government, diverting our focus from core problems like corruption and leeching to simple things like keeping roads clean"
@@ -35,37 +35,37 @@
     "name": "Demonitisation",
     "tweets": [
       {
-        "location": "Delhi, India",
+        "location": "Delhi",
         "gender": "female",
         "sentiment_score": 0.8,
         "tweet": "Pathetic move by Indian government."
       }, {
-        "location": "Bengaluru, India",
+        "location": "Bangalore",
         "gender": "male",
         "sentiment_score": 0.2,
         "tweet": "Such a bold move by our honerable Prime Minister."
       }, {
-        "location": "Mumbai, India",
+        "location": "Mumbai",
         "gender": "male",
         "sentiment_score": 0.7,
         "tweet": "The blunder made by the goverment due to applying demonitisation thoughtlessly has caused a serious blow to our GDP. Shame"
       }, {
-        "location": "Delhi, India",
+        "location": "Delhi",
         "gender": "female",
         "sentiment_score": 0.8,
         "tweet": "Pathetic move by Indian government."
       }, {
-        "location": "Bengaluru, India",
+        "location": "Bangalore",
         "gender": "male",
         "sentiment_score": 0.6,
         "tweet": "Such a bold move by our honerable Prime Minister."
       }, {
-        "location": "Mumbai, India",
+        "location": "Mumbai",
         "gender": "male",
         "sentiment_score": 0.3,
         "tweet": "The blunder made by the goverment due to applying demonitisation thoughtlessly has caused a serious blow to our GDP. Shame"
       }, {
-        "location": "Delhi, India",
+        "location": "Delhi",
         "gender": "female",
         "sentiment_score": 0.2,
         "tweet": "Such a bold move by our honerable Prime Minister."
