@@ -28,9 +28,27 @@ function RadialBar({ percentage, progressColor }) {
   }, [percentage]);
 
   return (
-    <svg  xmlns="http://www.w3.org/2000/svg" height="200" width="200" viewBox="0 0 200 130">
-      <path className={styles.path} stroke="#ddd" d="M41 149.5a77 77 0 1 1 117.93 0"  fill="none"/>
-      <path className={styles.path} ref={meterRef} stroke={progressColor} d="M41 149.5a77 77 0 1 1 117.93 0" fill="none" strokeDasharray="350" strokeDashoffset="350"/>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="200"
+      width="200"
+      viewBox="0 0 200 130"
+    >
+      <path
+        className={styles.path}
+        stroke="#ddd"
+        d="M41 149.5a77 77 0 1 1 117.93 0"
+        fill="none"
+      />
+      <path
+        className={styles.path}
+        ref={meterRef}
+        stroke={progressColor}
+        d="M41 149.5a77 77 0 1 1 117.93 0"
+        fill="none"
+        strokeDasharray="350"
+        strokeDashoffset="350"
+      />
     </svg>
   );
 }

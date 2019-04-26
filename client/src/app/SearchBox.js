@@ -39,10 +39,18 @@ function SearchBox({ onSubmit }) {
   }
 
   return (
-    <form className={styles.search_box} role="searchbox" onSubmit={handleSubmit}>
-      <input className={styles.search_input} ref={inputRef} placeholder="Search Schemes" />
+    <form
+      className={styles.search_box}
+      role="searchbox"
+      onSubmit={handleSubmit}
+    >
+      <input
+        className={styles.search_input}
+        ref={inputRef}
+        placeholder="Search Schemes"
+      />
       <button className={styles.search_button}>
-        <MagnifyingGlassIcon size={12}/>
+        <MagnifyingGlassIcon size={12} />
       </button>
     </form>
   );

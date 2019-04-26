@@ -21,12 +21,13 @@ export const Icon = ({ size, children, className, ...restProps }) => (
   </svg>
 );
 
-export const withIcon = (Component) => function ComponentIcon (props) {
-  ComponentIcon.displayName = Component.name + 'Icon';
+export const withIcon = Component =>
+  function ComponentIcon(props) {
+    ComponentIcon.displayName = Component.name + 'Icon';
 
-  return (
-    <Icon {...props}>
-      <Component />
-    </Icon>
-  );
-};
+    return (
+      <Icon {...props}>
+        <Component />
+      </Icon>
+    );
+  };

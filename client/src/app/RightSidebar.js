@@ -45,7 +45,7 @@ const styles = css`
   }
 
   .tweet + .tweet {
-    margin-top : 26px;
+    margin-top: 26px;
   }
 
   .tweet_animation {
@@ -60,9 +60,9 @@ const styles = css`
   }
 `;
 
-function RightSidebar({ tweets=[] }) {
+function RightSidebar({ tweets = [] }) {
   return (
-    <aside className={styles.right_sidebar} >
+    <aside className={styles.right_sidebar}>
       <p className={styles.description}>
         <Spacer mr={8} as="span">
           <PulseIcon size={14} className={styles.description_icon} />
@@ -71,20 +71,18 @@ function RightSidebar({ tweets=[] }) {
       </p>
       <ul className={styles.tweets_list}>
         <TransitionGroup component={null}>
-          {
-            tweets.map(({ tweet }) => (
-              <CSSTransition
-                key={tweet}
-                timeout={400}
-                classNames={{
-                  enter: styles.tweet_animation_enter,
-                  enterActive: styles.tweet_animation_enter_active,
-                }}
-              >
-                <li className={styles.tweet}>{tweet}</li>
-              </CSSTransition>
-            ))
-          }
+          {tweets.map(({ tweet }) => (
+            <CSSTransition
+              key={tweet}
+              timeout={400}
+              classNames={{
+                enter: styles.tweet_animation_enter,
+                enterActive: styles.tweet_animation_enter_active,
+              }}
+            >
+              <li className={styles.tweet}>{tweet}</li>
+            </CSSTransition>
+          ))}
         </TransitionGroup>
       </ul>
     </aside>

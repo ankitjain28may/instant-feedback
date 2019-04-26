@@ -16,17 +16,20 @@ function LocationChart({ cities, cityDstrb }) {
 
     const barChartData = {
       labels: cities,
-      datasets: [{
-        label: 'Positive Feedback',
-        backgroundColor: '#1fab89',
-        borderWidth: 0,
-        data: Object.values(cityDstrb.positive),
-      }, {
-        label: 'Negative Feedback',
-        backgroundColor: '#ff847c',
-        borderWidth: 0,
-        data: Object.values(cityDstrb.negative),
-      }]
+      datasets: [
+        {
+          label: 'Positive Feedback',
+          backgroundColor: '#1fab89',
+          borderWidth: 0,
+          data: Object.values(cityDstrb.positive),
+        },
+        {
+          label: 'Negative Feedback',
+          backgroundColor: '#ff847c',
+          borderWidth: 0,
+          data: Object.values(cityDstrb.negative),
+        },
+      ],
     };
 
     const chart = new Chart(ctx, {
@@ -37,21 +40,22 @@ function LocationChart({ cities, cityDstrb }) {
           enabled: false,
         },
         scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              // stepSize: 1,
-            }
-          }]
-        }
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+                // stepSize: 1,
+              },
+            },
+          ],
+        },
       },
     });
   });
 
   return (
     <div className={styles.chart}>
-      <canvas ref={canvasRef}>
-      </canvas>
+      <canvas ref={canvasRef} />
     </div>
   );
 }

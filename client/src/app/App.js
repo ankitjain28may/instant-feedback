@@ -52,7 +52,8 @@ const styles = css`
     padding-bottom: 10px;
   }
 
-  .positiveCount, .negativeCount {
+  .positiveCount,
+  .negativeCount {
     font-size: 28px;
   }
 
@@ -82,7 +83,7 @@ const cities = ['Delhi', 'Bangalore', 'Mumbai'];
 function extractCity(location) {
   const commaIndex = location.indexOf(',');
   return location.substring(0, commaIndex);
-} 
+}
 
 function computeTweetCount(tweets) {
   const tweetsCount = {
@@ -122,7 +123,7 @@ function computeCityDstrb(tweets) {
       Delhi: 0,
       Bangalore: 0,
       Mumbai: 0,
-    }
+    },
   };
 
   tweets.forEach(tweet => {
@@ -135,9 +136,9 @@ function computeCityDstrb(tweets) {
   return cityDstrb;
 }
 
-function App({ schemes=[], schemesData=[], activeScheme, addTweet }) {
+function App({ schemes = [], schemesData = [], activeScheme, addTweet }) {
   const scheme = schemesData[activeScheme] || {};
-  const { name, tweets=[] } = scheme;
+  const { name, tweets = [] } = scheme;
 
   React.useEffect(() => {
     const channel = pusher.subscribe(activeScheme);
@@ -149,7 +150,7 @@ function App({ schemes=[], schemesData=[], activeScheme, addTweet }) {
 
     return () => {
       pusher.unsubscribe(activeScheme);
-    }
+    };
   }, [activeScheme, addTweet]);
 
   const tweetsCount = computeTweetCount(tweets);
@@ -168,21 +169,53 @@ function App({ schemes=[], schemesData=[], activeScheme, addTweet }) {
         <Rating rating={rating} />
         <section className={styles.chart_section}>
           <div className={styles.percent_chart}>
-            <RadialBar progressColor='#1fab89' percentage={positivePerc} />
-            <p className={styles.ratio}><strong className={styles.positiveCount}>{tweetsCount.positive.total}</strong> out of <span className={styles.totalCount}>{tweetsCount.total}</span></p>
+            <RadialBar progressColor="#1fab89" percentage={positivePerc} />
+            <p className={styles.ratio}>
+              <strong className={styles.positiveCount}>
+                {tweetsCount.positive.total}
+              </strong>{' '}
+              out of{' '}
+              <span className={styles.totalCount}>{tweetsCount.total}</span>
+            </p>
             gave positive feedback
             <div className={styles.gender_diff}>
-              <span><strong className={styles.genderCount}>{tweetsCount.positive.male}</strong> males</span>
-              <span><strong className={styles.genderCount}>{tweetsCount.positive.female}</strong> females</span>
+              <span>
+                <strong className={styles.genderCount}>
+                  {tweetsCount.positive.male}
+                </strong>{' '}
+                males
+              </span>
+              <span>
+                <strong className={styles.genderCount}>
+                  {tweetsCount.positive.female}
+                </strong>{' '}
+                females
+              </span>
             </div>
           </div>
           <div className={styles.percent_chart}>
-            <RadialBar progressColor='#ff847c' percentage={negativePerc} />
-            <p className={styles.ratio}><strong className={styles.negativeCount}>{tweetsCount.negative.total}</strong> out of <span className={styles.totalCount}>{tweetsCount.total}</span></p>
+            <RadialBar progressColor="#ff847c" percentage={negativePerc} />
+            <p className={styles.ratio}>
+              <strong className={styles.negativeCount}>
+                {tweetsCount.negative.total}
+              </strong>{' '}
+              out of{' '}
+              <span className={styles.totalCount}>{tweetsCount.total}</span>
+            </p>
             gave negative feedback
             <div className={styles.gender_diff}>
-              <span><strong className={styles.genderCount}>{tweetsCount.negative.male}</strong> males</span>
-              <span><strong className={styles.genderCount}>{tweetsCount.negative.female}</strong> females</span>
+              <span>
+                <strong className={styles.genderCount}>
+                  {tweetsCount.negative.male}
+                </strong>{' '}
+                males
+              </span>
+              <span>
+                <strong className={styles.genderCount}>
+                  {tweetsCount.negative.female}
+                </strong>{' '}
+                females
+              </span>
             </div>
           </div>
         </section>

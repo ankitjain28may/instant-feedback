@@ -30,15 +30,15 @@ function LeftSidebar({ schemes }) {
 
   let filteredSchemes = schemes;
 
-  if(searchValue) {
+  if (searchValue) {
     filteredSchemes = schemes.filter(scheme => {
       const schemeName = scheme.name.toLowerCase();
       return schemeName.includes(searchValue);
     });
-  } 
+  }
 
   return (
-    <nav className={styles.left_sidebar} >
+    <nav className={styles.left_sidebar}>
       <h2 className={styles.title}>Instant Feedback</h2>
       <Spacer mt={40} mb={16}>
         <SearchBox onSubmit={handleSubmit} />
