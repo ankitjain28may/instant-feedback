@@ -31,8 +31,17 @@ const styles = css`
     text-align: center;
   }
 
+  .pdf_button {
+    background-color: #2196f3;
+    border: none;
+    padding: 10px 16px;
+    color: #fff;
+    border-radius: 4px;
+    margin-top: 40px;
+  }
+
   .chart_section {
-    margin: 20px 10px;
+    margin: 40px 30px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,6 +83,16 @@ const styles = css`
 
   .genderCount {
     font-size: 30px;
+  }
+
+  @media print {
+    .main {
+      margin-left: 0;
+    }
+
+    .pdf_button {
+      display: none;
+    }
   }
 `;
 
@@ -168,6 +187,7 @@ function App({ schemes = [], schemesData = [], activeScheme, addTweet }) {
       <main className={styles.main}>
         <h1 className={styles.title}>{name} Report</h1>
         <Rating rating={rating} />
+        <button className={styles.pdf_button} onClick={() => print()}>Download Report as PDF</button>
         <section className={styles.chart_section}>
           <div className={styles.percent_chart}>
             <RadialBar progressColor="#1fab89" percentage={positivePerc} />

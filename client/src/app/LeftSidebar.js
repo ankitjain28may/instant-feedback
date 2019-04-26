@@ -6,9 +6,6 @@ import { SearchBox } from 'app/SearchBox';
 import { SchemesList } from 'app/SchemesList';
 
 const styles = css`
-  .title {
-    padding-left: 6px;
-  }
   .left_sidebar {
     color: #fff;
     background-color: #0984e3;
@@ -17,6 +14,16 @@ const styles = css`
     position: fixed;
     height: 100vh;
     width: 270px;
+  }
+
+  .title {
+    padding-left: 6px;
+  }
+
+  @media print {
+    .left_sidebar {
+      display: none;
+    }
   }
 `;
 

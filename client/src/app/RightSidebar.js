@@ -6,6 +6,13 @@ import { PulseIcon } from 'components/icons/Pulse';
 import { Spacer } from 'components/Spacer';
 
 const styles = css`
+  .right_sidebar {
+    padding-top: 80px;
+    padding-bottom: 20px;
+    padding-right: 40px;
+    width: 290px;
+  }
+
   .description {
     color: #555;
     font-size: 14px;
@@ -20,13 +27,6 @@ const styles = css`
     &_text {
       padding-bottom: 5px;
     }
-  }
-
-  .right_sidebar {
-    padding-top: 80px;
-    padding-bottom: 20px;
-    padding-right: 40px;
-    width: 290px;
   }
 
   .tweets_list {
@@ -58,6 +58,12 @@ const styles = css`
       opacity: 1;
       transform: scale(1);
       transition: all 400ms ease-in;
+    }
+  }
+
+  @media print {
+    .right_sidebar {
+      display: none;
     }
   }
 `;
