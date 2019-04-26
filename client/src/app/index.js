@@ -24,6 +24,21 @@ function Bootstrap() {
 
   const schemes = computeSchemesList(apiData);
 
+  function addTweet(tweet, activeScheme) {
+    const scheme = apiData[activeScheme];
+
+    const schemeUpdated = {
+      ...scheme,
+      tweets: [tweet, ...scheme.tweets],
+    };
+    const stateUpdated = {
+      ...apiData,
+      [activeScheme]: schemeUpdated,
+    };
+
+    setApiData(stateUpdated);
+  }
+
   React.useEffect(() => {
     try {
       (async() => {
@@ -40,7 +55,7 @@ function Bootstrap() {
 
   return (
     <Router>
-      <App path=":activeScheme" schemes={schemes} schemesData={apiData} />
+      <App path=":activeScheme" schemes={schemes} schemesData={apiData} addTweet={addTweet} />
     </Router>
   );
 }

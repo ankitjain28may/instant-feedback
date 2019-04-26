@@ -2,12 +2,24 @@ import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { css } from 'astroturf';
 
+import { PulseIcon } from 'components/icons/Pulse';
+import { Spacer } from 'components/Spacer';
+
 const styles = css`
   .description {
     color: #555;
     font-size: 14px;
     font-weight: bold;
-    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+
+    &_icon {
+      color: #555;
+    }
+
+    &_text {
+      padding-bottom: 5px;
+    }
   }
 
   .right_sidebar {
@@ -51,7 +63,12 @@ const styles = css`
 function RightSidebar({ tweets=[] }) {
   return (
     <aside className={styles.right_sidebar} >
-      <p className={styles.description}>Tweets on scheme</p>
+      <p className={styles.description}>
+        <Spacer mr={8} as="span">
+          <PulseIcon size={14} className={styles.description_icon} />
+        </Spacer>
+        <span className={styles.description_text}>Tweets on scheme</span>
+      </p>
       <ul className={styles.tweets_list}>
         <TransitionGroup component={null}>
           {

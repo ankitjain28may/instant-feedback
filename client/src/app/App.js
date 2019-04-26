@@ -135,39 +135,30 @@ function computeCityDstrb(tweets) {
   return cityDstrb;
 }
 
-function App({ schemes=[], schemesData=[], activeScheme }) {
+function App({ schemes=[], schemesData=[], activeScheme, addTweet }) {
   const scheme = schemesData[activeScheme] || {};
   const { name, tweets=[] } = scheme;
 
-  const [tweetState, setTweetState] = React.useState(tweets);
-
   React.useEffect(() => {
-    setTweetState(tweets);
-  }, [tweets]);
-
-  React.useEffect(() => {
-    console.log('subscribe');
     const channel = pusher.subscribe(activeScheme);
 
     channel.bind('App\\Events\\TweetsStream', function(data) {
-      console.log('An event was triggered with message: ', data);
       const newTweet = data.tweet;
-      setTweetState((oldTweets) => ([newTweet, ...oldTweets]));
+      addTweet(newTweet, activeScheme);
     });
 
     return () => {
-      console.log('unsubscribe');
       pusher.unsubscribe(activeScheme);
     }
-  }, [activeScheme]);
+  }, [activeScheme, addTweet]);
 
-  const tweetsCount = computeTweetCount(tweetState);
-  const cityDstrb = computeCityDstrb(tweetState);
+  const tweetsCount = computeTweetCount(tweets);
+  const cityDstrb = computeCityDstrb(tweets);
 
   const positivePerc = (tweetsCount.positive.total / tweetsCount.total) * 100;
   const negativePerc = (tweetsCount.negative.total / tweetsCount.total) * 100;
   const rating = Math.round(positivePerc / 20);
-  const limitedTweets = [...tweetState].sort((a, b) => b.id - a.id).slice(0, 10);
+  const limitedTweets = [...tweets].sort((a, b) => b.id - a.id).slice(0, 10);
 
   return (
     <div className={styles.app}>

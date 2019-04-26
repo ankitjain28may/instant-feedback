@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'astroturf';
 
-import { MagnifyingGlass } from 'components/icons/MagnifyingGlass';
+import { MagnifyingGlassIcon } from 'components/icons/MagnifyingGlass';
 
 const styles = css`
   .search {
@@ -42,7 +42,7 @@ function SearchBox({ onSubmit }) {
     <form className={styles.search_box} role="searchbox" onSubmit={handleSubmit}>
       <input className={styles.search_input} ref={inputRef} placeholder="Search Schemes" />
       <button className={styles.search_button}>
-        <MagnifyingGlass size={12}/>
+        <MagnifyingGlassIcon size={12}/>
       </button>
     </form>
   );
