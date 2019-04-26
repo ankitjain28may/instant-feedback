@@ -8,6 +8,7 @@ import { RadialBar } from 'components/RadialBar';
 import { LeftSidebar } from 'app/LeftSidebar';
 import { RightSidebar } from 'app/RightSidebar';
 import { LocationChart } from 'app/LocationChart';
+import { TimeChart } from 'app/TimeChart';
 
 const styles = css`
   .app {
@@ -221,6 +222,9 @@ function App({ schemes = [], schemesData = [], activeScheme, addTweet }) {
         </section>
         <section className={styles.chart_section}>
           <LocationChart cities={cities} cityDstrb={cityDstrb} />
+        </section>
+        <section className={styles.chart_section}>
+          <TimeChart tweets={tweets} />
         </section>
       </main>
       <RightSidebar tweets={limitedTweets} />

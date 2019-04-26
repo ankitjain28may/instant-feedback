@@ -38,6 +38,7 @@
     "@reach/router": "^1.2.1",
     "chart.js": "^2.8.0",
     "classnames": "^2.2.6",
+    "luxon": "^1.12.1",
     "open-iconic": "^1.1.1",
     "pusher-js": "^4.4.0",
     "react": "^16.8.6",

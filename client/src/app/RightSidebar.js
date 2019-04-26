@@ -51,11 +51,13 @@ const styles = css`
   .tweet_animation {
     &_enter {
       opacity: 0;
+      transform: scale(0.9);
     }
 
     &_enter_active {
       opacity: 1;
-      transition: opacity 400ms ease-in;
+      transform: scale(1);
+      transition: all 400ms ease-in;
     }
   }
 `;
@@ -67,7 +69,7 @@ function RightSidebar({ tweets = [] }) {
         <Spacer mr={8} as="span">
           <PulseIcon size={14} className={styles.description_icon} />
         </Spacer>
-        <span className={styles.description_text}>Tweets on scheme</span>
+        <span className={styles.description_text}>Live Tweets</span>
       </p>
       <ul className={styles.tweets_list}>
         <TransitionGroup component={null}>
