@@ -1,6 +1,7 @@
 import React from 'react';
 import { css } from 'astroturf';
 import Chart from 'chart.js';
+import { DateTime } from "luxon";
 
 const styles = css`
   .chart {
@@ -8,32 +9,44 @@ const styles = css`
   }
 `;
 
-function LocationChart({ cities, cityDstrb }) {
+function computeTimeSheet(tweets) {
+  const timeSheet = {};
+  tweets.forEach(tweet => {
+    const createdTime = tweet.created_at;
+    const dt = DateTime.fromSQL(createdTime);
+    const formattedTime = dt.toLocaleString({ month: 'long', day: 'numeric' });
+    const count = timeSheet[formattedTime] || 0;
+    timeSheet[formattedTime] = count + 1;
+  });
+
+  return timeSheet;
+}
+
+function TimeChart({ tweets }) {
   const canvasRef = React.useRef();
+  const timeSheet = computeTimeSheet(tweets);
 
   React.useEffect(() => {
     const ctx = canvasRef.current.getContext('2d');
 
     const barChartData = {
-      labels: cities,
+      labels: Object.keys(timeSheet),
       datasets: [
         {
-          label: 'Positive Feedback',
+          label: 'Date of Tweet',
           backgroundColor: '#1fab89',
           borderWidth: 0,
-          data: Object.values(cityDstrb.positive),
-        },
-        {
-          label: 'Negative Feedback',
-          backgroundColor: '#ff847c',
-          borderWidth: 0,
-          data: Object.values(cityDstrb.negative),
+          fill: false,
+          lineTension: 0,
+          borderColor: '#1fab89',
+          borderWidth: 4,
+          data: Object.values(timeSheet),
         },
       ],
     };
 
     const chart = new Chart(ctx, {
-      type: 'bar',
+      type: 'line',
       data: barChartData,
       options: {
         tooltips: {
@@ -44,7 +57,6 @@ function LocationChart({ cities, cityDstrb }) {
             {
               ticks: {
                 beginAtZero: true,
-                // stepSize: 1,
               },
             },
           ],
@@ -60,4 +72,4 @@ function LocationChart({ cities, cityDstrb }) {
   );
 }
 
-export { LocationChart };
+export { TimeChart };

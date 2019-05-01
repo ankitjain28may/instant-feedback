@@ -7,4 +7,3 @@ export function initPusher() {
 
   return socket;
 }
-

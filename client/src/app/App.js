@@ -8,6 +8,7 @@ import { RadialBar } from 'components/RadialBar';
 import { LeftSidebar } from 'app/LeftSidebar';
 import { RightSidebar } from 'app/RightSidebar';
 import { LocationChart } from 'app/LocationChart';
+import { TimeChart } from 'app/TimeChart';
 
 const styles = css`
   .app {
@@ -30,8 +31,17 @@ const styles = css`
     text-align: center;
   }
 
+  .pdf_button {
+    background-color: #2196f3;
+    border: none;
+    padding: 10px 16px;
+    color: #fff;
+    border-radius: 4px;
+    margin-top: 40px;
+  }
+
   .chart_section {
-    margin: 20px 10px;
+    margin: 40px 30px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,7 +62,8 @@ const styles = css`
     padding-bottom: 10px;
   }
 
-  .positiveCount, .negativeCount {
+  .positiveCount,
+  .negativeCount {
     font-size: 28px;
   }
 
@@ -73,6 +84,16 @@ const styles = css`
   .genderCount {
     font-size: 30px;
   }
+
+  @media print {
+    .main {
+      margin-left: 0;
+    }
+
+    .pdf_button {
+      display: none;
+    }
+  }
 `;
 
 const pusher = initPusher();
@@ -82,7 +103,7 @@ const cities = ['Delhi', 'Bangalore', 'Mumbai'];
 function extractCity(location) {
   const commaIndex = location.indexOf(',');
   return location.substring(0, commaIndex);
-} 
+}
 
 function computeTweetCount(tweets) {
   const tweetsCount = {
@@ -122,7 +143,7 @@ function computeCityDstrb(tweets) {
       Delhi: 0,
       Bangalore: 0,
       Mumbai: 0,
-    }
+    },
   };
 
   tweets.forEach(tweet => {
@@ -135,39 +156,30 @@ function computeCityDstrb(tweets) {
   return cityDstrb;
 }
 
-function App({ schemes=[], schemesData=[], activeScheme }) {
+function App({ schemes = [], schemesData = [], activeScheme, addTweet }) {
   const scheme = schemesData[activeScheme] || {};
-  const { name, tweets=[] } = scheme;
-
-  const [tweetState, setTweetState] = React.useState(tweets);
+  const { name, tweets = [] } = scheme;
 
   React.useEffect(() => {
-    setTweetState(tweets);
-  }, [tweets]);
-
-  React.useEffect(() => {
-    console.log('subscribe');
     const channel = pusher.subscribe(activeScheme);
 
     channel.bind('App\\Events\\TweetsStream', function(data) {
-      console.log('An event was triggered with message: ', data);
       const newTweet = data.tweet;
-      setTweetState((oldTweets) => ([newTweet, ...oldTweets]));
+      addTweet(newTweet, activeScheme);
     });
 
     return () => {
-      console.log('unsubscribe');
       pusher.unsubscribe(activeScheme);
-    }
-  }, [activeScheme]);
-  
-  const tweetsCount = computeTweetCount(tweetState);
-  const cityDstrb = computeCityDstrb(tweetState);
+    };
+  }, [activeScheme, addTweet]);
+
+  const tweetsCount = computeTweetCount(tweets);
+  const cityDstrb = computeCityDstrb(tweets);
 
   const positivePerc = (tweetsCount.positive.total / tweetsCount.total) * 100;
   const negativePerc = (tweetsCount.negative.total / tweetsCount.total) * 100;
   const rating = Math.round(positivePerc / 20);
-  const limitedTweets = tweetState.slice(0, 10);
+  const limitedTweets = [...tweets].sort((a, b) => b.id - a.id).slice(0, 10);
 
   return (
     <div className={styles.app}>
@@ -175,28 +187,64 @@ function App({ schemes=[], schemesData=[], activeScheme }) {
       <main className={styles.main}>
         <h1 className={styles.title}>{name} Report</h1>
         <Rating rating={rating} />
+        <button className={styles.pdf_button} onClick={() => print()}>Download Report as PDF</button>
         <section className={styles.chart_section}>
           <div className={styles.percent_chart}>
-            <RadialBar progressColor='#1fab89' percentage={positivePerc} />
-            <p className={styles.ratio}><strong className={styles.positiveCount}>{tweetsCount.positive.total}</strong> out of <span className={styles.totalCount}>{tweetsCount.total}</span></p>
+            <RadialBar progressColor="#1fab89" percentage={positivePerc} />
+            <p className={styles.ratio}>
+              <strong className={styles.positiveCount}>
+                {tweetsCount.positive.total}
+              </strong>{' '}
+              out of{' '}
+              <span className={styles.totalCount}>{tweetsCount.total}</span>
+            </p>
             gave positive feedback
             <div className={styles.gender_diff}>
-              <span><strong className={styles.genderCount}>{tweetsCount.positive.male}</strong> males</span>
-              <span><strong className={styles.genderCount}>{tweetsCount.positive.female}</strong> females</span>
+              <span>
+                <strong className={styles.genderCount}>
+                  {tweetsCount.positive.male}
+                </strong>{' '}
+                males
+              </span>
+              <span>
+                <strong className={styles.genderCount}>
+                  {tweetsCount.positive.female}
+                </strong>{' '}
+                females
+              </span>
             </div>
           </div>
           <div className={styles.percent_chart}>
-            <RadialBar progressColor='#ff847c' percentage={negativePerc} />
-            <p className={styles.ratio}><strong className={styles.negativeCount}>{tweetsCount.negative.total}</strong> out of <span className={styles.totalCount}>{tweetsCount.total}</span></p>
+            <RadialBar progressColor="#ff847c" percentage={negativePerc} />
+            <p className={styles.ratio}>
+              <strong className={styles.negativeCount}>
+                {tweetsCount.negative.total}
+              </strong>{' '}
+              out of{' '}
+              <span className={styles.totalCount}>{tweetsCount.total}</span>
+            </p>
             gave negative feedback
             <div className={styles.gender_diff}>
-              <span><strong className={styles.genderCount}>{tweetsCount.negative.male}</strong> males</span>
-              <span><strong className={styles.genderCount}>{tweetsCount.negative.female}</strong> females</span>
+              <span>
+                <strong className={styles.genderCount}>
+                  {tweetsCount.negative.male}
+                </strong>{' '}
+                males
+              </span>
+              <span>
+                <strong className={styles.genderCount}>
+                  {tweetsCount.negative.female}
+                </strong>{' '}
+                females
+              </span>
             </div>
           </div>
         </section>
         <section className={styles.chart_section}>
           <LocationChart cities={cities} cityDstrb={cityDstrb} />
+        </section>
+        <section className={styles.chart_section}>
+          <TimeChart tweets={tweets} />
         </section>
       </main>
       <RightSidebar tweets={limitedTweets} />

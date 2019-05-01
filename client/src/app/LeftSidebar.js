@@ -6,9 +6,6 @@ import { SearchBox } from 'app/SearchBox';
 import { SchemesList } from 'app/SchemesList';
 
 const styles = css`
-  .title {
-    padding-left: 6px;
-  }
   .left_sidebar {
     color: #fff;
     background-color: #0984e3;
@@ -17,6 +14,16 @@ const styles = css`
     position: fixed;
     height: 100vh;
     width: 270px;
+  }
+
+  .title {
+    padding-left: 6px;
+  }
+
+  @media print {
+    .left_sidebar {
+      display: none;
+    }
   }
 `;
 
@@ -30,15 +37,15 @@ function LeftSidebar({ schemes }) {
 
   let filteredSchemes = schemes;
 
-  if(searchValue) {
+  if (searchValue) {
     filteredSchemes = schemes.filter(scheme => {
       const schemeName = scheme.name.toLowerCase();
       return schemeName.includes(searchValue);
     });
-  } 
+  }
 
   return (
-    <nav className={styles.left_sidebar} >
+    <nav className={styles.left_sidebar}>
       <h2 className={styles.title}>Instant Feedback</h2>
       <Spacer mt={40} mb={16}>
         <SearchBox onSubmit={handleSubmit} />

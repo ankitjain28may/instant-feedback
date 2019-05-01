@@ -10,7 +10,7 @@ const styles = css`
   }
 `;
 
-function Spacer({ ml, mr, mt, mb, mx, my, children }) {
+function Spacer({ ml, mr, mt, mb, mx, my, as, children }) {
   const m = {
     l: ml || mx || 0,
     r: mr || mx || 0,
@@ -25,10 +25,12 @@ function Spacer({ ml, mr, mt, mb, mx, my, children }) {
     '--mb': `${m.b}px`,
   };
 
+  const Component = as || 'div';
+
   return (
-    <div className={styles.spacer} style={variableStyles}>
+    <Component className={styles.spacer} style={variableStyles}>
       {children}
-    </div>
+    </Component>
   );
 }
 

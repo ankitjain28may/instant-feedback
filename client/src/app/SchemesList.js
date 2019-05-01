@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "@reach/router";
+import { Link } from '@reach/router';
 import { css } from 'astroturf';
 import classnames from 'classnames';
 
@@ -32,23 +32,21 @@ const styles = css`
 
 function SchemesList({ schemes }) {
   return (
-    <ul className={styles.schemes_list} >
-      {
-        schemes.map(scheme => (
-          <li className={styles.scheme} key={scheme.hashtag}>
-            <Link
-              getProps={({ isCurrent }) => ({
-                className: classnames(styles.link, {
-                  [styles.active_link]: isCurrent
-                })
-              })}
-              to={`/${scheme.hashtag}`}
-            >
-              {scheme.name}
-            </Link>
-          </li>
-        ))
-      }
+    <ul className={styles.schemes_list}>
+      {schemes.map(scheme => (
+        <li className={styles.scheme} key={scheme.hashtag}>
+          <Link
+            getProps={({ isCurrent }) => ({
+              className: classnames(styles.link, {
+                [styles.active_link]: isCurrent,
+              }),
+            })}
+            to={`/${scheme.hashtag}`}
+          >
+            {scheme.name}
+          </Link>
+        </li>
+      ))}
     </ul>
   );
 }
