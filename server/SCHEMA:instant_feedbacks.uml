@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>fd476dd9-0f91-4f28-b368-26685a37dd16.SCHEMA:instant_feedbacks</OriginalElement>
+  <nodes>
+    <node x="0.0" y="0.0">fd476dd9-0f91-4f28-b368-26685a37dd16.TABLE:instant_feedbacks.schemes</node>
+    <node x="576.0" y="566.0">fd476dd9-0f91-4f28-b368-26685a37dd16.TABLE:instant_feedbacks.password_resets</node>
+    <node x="0.0" y="566.0">fd476dd9-0f91-4f28-b368-26685a37dd16.TABLE:instant_feedbacks.user_ministry</node>
+    <node x="398.0" y="294.0">fd476dd9-0f91-4f28-b368-26685a37dd16.TABLE:instant_feedbacks.ministry</node>
+    <node x="418.0" y="0.0">fd476dd9-0f91-4f28-b368-26685a37dd16.TABLE:instant_feedbacks.users</node>
+    <node x="0.0" y="294.0">fd476dd9-0f91-4f28-b368-26685a37dd16.TABLE:instant_feedbacks.tweets</node>
+    <node x="318.0" y="566.0">fd476dd9-0f91-4f28-b368-26685a37dd16.TABLE:instant_feedbacks.migrations</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="0.7813793103448275" x="665.3053839364519" y="304.50132391879964" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+  </Categories>
+</Diagram>
+
