@@ -9,8 +9,9 @@ const styles = css`
   }
 `;
 
-function computeTimeSheet(tweets) {
+function computeTimeData(tweets) {
   const timeSheet = {};
+  const sortedCount = [];
   tweets.forEach(tweet => {
     const createdTime = tweet.created_at;
     const dt = DateTime.fromSQL(createdTime);
@@ -19,18 +20,23 @@ function computeTimeSheet(tweets) {
     timeSheet[formattedTime] = count + 1;
   });
 
-  return timeSheet;
+  const sortedTime = Object.keys(timeSheet).sort();
+  sortedTime.forEach(formattedTime => {
+    sortedCount.push(timeSheet[formattedTime]);
+  });
+
+  return [sortedTime, sortedCount];
 }
 
 function TimeChart({ tweets }) {
   const canvasRef = React.useRef();
-  const timeSheet = computeTimeSheet(tweets);
+  const [sortedTime, sortedCount] = computeTimeData(tweets);
 
   React.useEffect(() => {
     const ctx = canvasRef.current.getContext('2d');
 
     const barChartData = {
-      labels: Object.keys(timeSheet),
+      labels: sortedTime,
       datasets: [
         {
           label: 'Date of Tweet',
@@ -40,7 +46,7 @@ function TimeChart({ tweets }) {
           lineTension: 0,
           borderColor: '#1fab89',
           borderWidth: 4,
-          data: Object.values(timeSheet),
+          data: sortedCount,
         },
       ],
     };
